@@ -25,7 +25,7 @@ type Result = {
 
 let worker: Worker | null = null
 const createWorker = () => {
-  worker = new Worker('/js/worker.js')
+  worker = new Worker('./js/worker.js')
   worker.addEventListener('message', (e) => {
     if (e.data === 'completed'){
         document.getElementById('start-button')!.removeAttribute('disabled')
@@ -40,11 +40,17 @@ const createWorker = () => {
   return worker
 }
 
-const fetchSeedList = async (id: string) => {
-  const url = `http://localhost:8080/api/${id}.json` // デバッグ用。
+const fetchSeedList = async (id: string, version: 'sm' | 'usum') => {
+  const url = `https://jyk6mdg08i.execute-api.ap-northeast-1.amazonaws.com/rng/gen7/tsvsupport?version=${version}&g7tid=${id}`
   return fetch(url)
-    .then((res) => res.json())
-    .catch(() => null)
+    .then((res) => {
+      if(!res.ok) throw new Error(`${res.status} ${res.statusText}`)
+      return res.json()
+    })
+    .catch((e) => {
+      console.log(e)
+      return null
+    })
 }
 
 async function run() {
@@ -54,7 +60,7 @@ async function run() {
     const id = getID();
     if (id == null) return alert('IDの入力にエラーがあります')
 
-    const seedList = await fetchSeedList(id)
+    const seedList = await fetchSeedList(id, version)
     if (!seedList) return alert('seedリストの取得に失敗しました (・ω<)')
 
     const ivs = getIVs();
