@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
+    "api": "npx http-server -c-1 --cors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

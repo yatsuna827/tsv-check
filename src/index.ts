@@ -25,7 +25,7 @@ type Result = {
 
 let worker: Worker | null = null
 const createWorker = () => {
-  worker = new Worker('worker.js')
+  worker = new Worker('/js/worker.js')
   worker.addEventListener('message', (e) => {
     if (e.data === 'completed'){
         document.getElementById('start-button')!.removeAttribute('disabled')
@@ -41,7 +41,7 @@ const createWorker = () => {
 }
 
 const fetchSeedList = async (id: string) => {
-  const url = `/api/${id}.json` // デバッグ用。
+  const url = `http://localhost:8080/api/${id}.json` // デバッグ用。
   return fetch(url)
     .then((res) => res.json())
     .catch(() => null)
