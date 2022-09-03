@@ -1,12 +1,17 @@
 const getValue = (el: HTMLInputElement) => el.checkValidity() ? Number(el.value) : null
 const getID = () => getValue(document.getElementById('id-input') as HTMLInputElement)?.toString().padStart(6,'0')
 const getIVs = () => ['h','a','b','c','d','s'].map(_ => getValue(document.getElementById(`ivs-${_}`) as HTMLInputElement))
-const addRow = (txt: string) => {
-    const div = document.createElement('div')
-    div.className = 'message card'
-    div.append(txt)
-    document.getElementById('message-container')!.appendChild(div)
-    scrollToBottom()
+const addRow = (txt: string, onClick?: () => void) => {
+  const div = document.createElement('div')
+  const classes = ['message', 'card']
+  if (onClick) {
+    classes.push('clickable')
+    div.addEventListener('click', onClick)
+  }
+  div.className = classes.join(' ')
+  div.append(txt)
+  document.getElementById('message-container')!.appendChild(div)
+  scrollToBottom()
 }
 const scrollToBottom = () => {
   const el = document.documentElement
@@ -24,16 +29,25 @@ type Result = {
 }
 
 let worker: Worker | null = null
-const createWorker = () => {
+const createWorker = (id: string, version: string) => {
   worker = new Worker('./js/worker.js')
+  let found = false
   worker.addEventListener('message', (e) => {
     if (e.data === 'completed'){
         document.getElementById('start-button')!.removeAttribute('disabled')
         addRow('計算を終了しました')
+        if (found) {
+          addRow('結果をクリック/タップするとツイートできます')
+        }
     }
     else {
+      found = true
       const {seed, index, tsv, trv} = e.data as Result
-      addRow(`${seed} ${index}[F] tsv=${tsv} trv=${trv}`)
+      addRow(`${seed} ${index}[F] tsv=${tsv} trv=${trv}`, () => {
+        const tweet = `ID ${id} のセーブデータのTSVを特定したよ！ seed=${seed} TSV=${tsv} TRV=${trv}`
+        const shareURL = `https://twitter.com/intent/tweet?text=${tweet}`
+        window.open(shareURL)
+      })
     }
   })
 
@@ -54,14 +68,13 @@ const fetchSeedList = async (id: string, version: 'sm' | 'usum') => {
 }
 
 async function run() {
+  document.getElementById('start-button')!.setAttribute('disabled', 'true')
+
   const version = (document.getElementById('ver-sm') as HTMLInputElement).checked
     ? 'sm' : 'usum'
 
     const id = getID();
     if (id == null) return alert('IDの入力にエラーがあります')
-
-    const seedList = await fetchSeedList(id, version)
-    if (!seedList) return alert('seedリストの取得に失敗しました (・ω<)')
 
     const ivs = getIVs();
     if (ivs.includes(null)) return alert('個体値の入力にエラーがあります')
@@ -71,9 +84,15 @@ async function run() {
     const max = getValue(document.getElementById('search-max') as HTMLInputElement)
     if (max == null) return alert('上限の入力にエラーがあります')
 
-    createWorker().postMessage({ method: 'start', version, ivs, nature, seedList, max })
-    document.getElementById('start-button')!.setAttribute('disabled', 'true')
-    addRow('計算を開始しました')
+    fetchSeedList(id, version)
+      .then((seedList) => {
+        createWorker(id, version).postMessage({ method: 'start', version, ivs, nature, seedList, max })
+        addRow('計算を開始しました')
+      })
+      .catch(() => {
+        alert('seedリストの取得に失敗しました (・ω<)')
+        document.getElementById('start-button')!.removeAttribute('disabled')
+      })
 }
 function cancel() {
   if (worker) {
