@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="ポケモン第7世代のTSV検索ツール">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="./css/style.css" rel="stylesheet">
+  <script src="./js/index.js"></script>
+  <title>tsv-check</title>
+</head>
+<body>
+  <header>
+    TSV Checker
+  </header>
+  <div id="page-container">
+    <div class="card">
+      <div class="grid-wrapper">
+
+        <label>バージョン</label>
+        <div id="versions">
+          <label><input type="radio" id="ver-sm" name="ver" value="sm" checked>SM</label>
+          <label><input type="radio" id="ver-usum" name="ver" value="usum">USUM</label>
+        </div>
+  
+        <label for="id-input">ID</label>
+        <input id="id-input" type="number" class="no-spin" min="0" max="999999" step="1" required value="000000" onfocus="this.select()">
+        
+        <label for="nature-select">性格</label>
+        <select id="nature-select">
+          <option value="3">いじっぱり</option>
+          <option value="19">うっかりや</option>
+          <option value="10">おくびょう</option>
+          <option value="20">おだやか</option>
+          <option value="16">おっとり</option>
+          <option value="21">おとなしい</option>
+          <option value="0">がんばりや</option>
+          <option value="24">きまぐれ</option>
+          <option value="1">さみしがり</option>
+          <option value="23">しんちょう</option>
+          <option value="6">すなお</option>
+          <option value="5">ずぶとい</option>
+          <option value="11">せっかち</option>
+          <option value="18">てれや</option>
+          <option value="22">なまいき</option>
+          <option value="9">のうてんき</option>
+          <option value="7">のんき</option>
+          <option value="15">ひかえめ</option>
+          <option value="12">まじめ</option>
+          <option value="14">むじゃき</option>
+          <option value="4">やんちゃ</option>
+          <option value="2">ゆうかん</option>
+          <option value="13">ようき</option>
+          <option value="17">れいせい</option>
+          <option value="8">わんぱく</option>
+        </select>
+      
+        <label for="ivs-h">H</label>
+        <input id="ivs-h" class="ivs" type="number" min="0" max="31" step="1" required value="0" onfocus="this.select()" >
+        <label for="ivs-a">A</label>
+        <input id="ivs-a" class="ivs" type="number" min="0" max="31" step="1" required value="0" onfocus="this.select()" >
+        <label for="ivs-b">B</label>
+        <input id="ivs-b" class="ivs" type="number" min="0" max="31" step="1" required value="0" onfocus="this.select()" >
+        <label for="ivs-c">C</label>
+        <input id="ivs-c" class="ivs" type="number" min="0" max="31" step="1" required value="0" onfocus="this.select()" >
+        <label for="ivs-d">D</label>
+        <input id="ivs-d" class="ivs" type="number" min="0" max="31" step="1" required value="0" onfocus="this.select()" >
+        <label for="ivs-s">S</label>
+        <input id="ivs-s" class="ivs" type="number" min="0" max="31" step="1" required value="0" onfocus="this.select()" >
+      
+        <label for="search-max">上限</label>
+        <div>
+          <input id="search-max" type="number" min="0" max="1000000" step="1" required value="40000" onfocus="this.select()">
+          F
+        </div>
+      </div>
+      <div id="buttons-container">
+        <button id="start-button" onclick="run()">検索開始</button>
+        <button id="cancel-button" onclick="cancel()">中止</button>
+      </div>
+    </div>
+
+    <hr>
+    
+    <div id="message-container"></div>
+  </div>
+  <footer>
+    &copy; 2022 <a href="https://twitter.com/sub_827" target="_blank">夜綱</a>.
+  </footer>
+</body>
+</html>

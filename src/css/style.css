@@ -1,0 +1,157 @@
+*, ::after, ::before {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+input[type="number"] {
+  font-size: 14px;
+  color: #555;
+  padding-left: 6px;
+  height: 32px;
+  outline: none;
+  border: 0;
+  border-radius: 10px;
+}
+input[type="number"].no-spin {
+  -moz-appearance:textfield; 
+}
+input[type="number"].no-spin::-webkit-outer-spin-button, 
+input[type="number"].no-spin::-webkit-inner-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+} 
+input:invalid {
+  border: 2px solid red;
+}
+select {
+  color: #555;
+  background-color: white;
+  border: none;
+  height: 32px;
+  border-radius: 10px;
+  display: inline-block;
+  font: inherit;
+  line-height: 1.5em;
+  padding: 2px 12px 2px 6px;
+  cursor: pointer;
+}
+button {
+  border: none;
+  outline: none;
+  appearance: none;
+
+  width: 120px;
+  border-radius: 10px;
+  padding: 10px 25px;
+  font-weight: 500;
+  cursor: pointer;
+}
+button:hover, .clickable:hover {
+  opacity: 0.66;
+}
+button:disabled {
+  opacity: 0.3;
+  cursor: wait;
+}
+.clickable {
+  cursor: pointer;
+}
+
+#page-container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+@media (min-width: 768px) {
+  #page-container {
+    width: 750px;
+  }
+}
+
+#message-container {
+  display: flex;
+  flex-flow: column;
+  gap: 10px;
+}
+
+input.ivs {
+  width: 64px;
+}
+#id-input, #nature-select {
+  width: 120px;
+}
+#search-max {
+  width: 150px;
+}
+
+#versions, #versions label, #versions input {
+  cursor: pointer;
+}
+#versions input {
+  margin-right: 5px;
+}
+
+#buttons-container {
+  margin-top: 10px;
+}
+
+#start-button {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #29beef;
+}
+#cancel-button {
+  color: #555;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: white;
+}
+
+.grid-wrapper {
+  display: grid;
+  grid-template-columns: 80px auto;
+  align-items: center;
+
+  gap: 10px;
+}
+.grid-wrapper label {
+  justify-self: end;
+}
+
+.card {
+  padding: 16px;
+  background: #EFEFEF;
+  box-shadow: 0 1px 6px rgb(0 0 0 / 12%), 0 1px 4px rgb(0 0 0 / 12%);
+}
+
+a {
+  text-decoration: none;
+}
+
+header {
+  font-size: 2em;
+  font-weight: 600;
+  background: #29beef;
+  color: white;
+  width: 100%;
+  margin-bottom: 30px;
+  padding: 10px 30px;
+}
+footer {
+  background: #29beef;
+  color: white;
+  width: 100%;
+  margin-top: 50px;
+  padding: 30px 0;
+  text-align: center;
+}
