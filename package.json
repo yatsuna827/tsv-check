@@ -5,13 +5,18 @@
   "main": "index.js",
   "scripts": {
     "build": "ncp ./src/index.html ./page/index.html & ncp ./src/css ./page/css & tsc",
-    "api": "npx http-server -c-1 --cors",
+    "run": "npx http-server -c-1 --cors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
     "ncp": "^2.0.0",
+    "prettier": "^2.7.1",
     "typescript": "^4.8.2"
   }
 }
