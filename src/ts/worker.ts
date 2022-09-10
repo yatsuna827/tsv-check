@@ -1,4 +1,3 @@
-'use strict'
 if (!Math.imul) {
   Math.imul = function (opA, opB) {
     opB |= 0
