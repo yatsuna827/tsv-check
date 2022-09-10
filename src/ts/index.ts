@@ -1,12 +1,10 @@
 const getValue = (el: HTMLInputElement) =>
   el.checkValidity() ? Number(el.value) : null
 const getID = () =>
-  getValue(document.getElementById('id-input') as HTMLInputElement)
-    ?.toString()
-    .padStart(6, '0')
+  getValue(document.getElementById('id-input'))?.toString().padStart(6, '0')
 const getIVs = () =>
-  ['h', 'a', 'b', 'c', 'd', 's'].map((_) =>
-    getValue(document.getElementById(`ivs-${_}`) as HTMLInputElement)
+  (['h', 'a', 'b', 'c', 'd', 's'] as const).map((_) =>
+    getValue(document.getElementById(`ivs-${_}`))
   )
 const addRow = (txt: string, onClick?: () => void) => {
   const div = document.createElement('div')
@@ -17,8 +15,7 @@ const addRow = (txt: string, onClick?: () => void) => {
   }
   div.className = classes.join(' ')
   div.append(txt)
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  document.getElementById('message-container')!.appendChild(div)
+  document.getElementById('message-container').appendChild(div)
   scrollToBottom()
 }
 const scrollToBottom = () => {
@@ -42,8 +39,7 @@ const createWorker = (id: string) => {
   let found = false
   worker.addEventListener('message', (e) => {
     if (e.data === 'completed') {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      document.getElementById('start-button')!.removeAttribute('disabled')
+      document.getElementById('start-button').removeAttribute('disabled')
       addRow('計算を終了しました')
       if (found) {
         addRow('結果をクリック/タップするとツイートできます')
@@ -77,13 +73,9 @@ const fetchSeedList = async (id: string, version: 'sm' | 'usum') => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function run() {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  document.getElementById('start-button')!.setAttribute('disabled', 'true')
+  document.getElementById('start-button').setAttribute('disabled', 'true')
 
-  const version = (document.getElementById('ver-sm') as HTMLInputElement)
-    .checked
-    ? 'sm'
-    : 'usum'
+  const version = document.getElementById('ver-sm').checked ? 'sm' : 'usum'
 
   const id = getID()
   if (id == null) return alert('IDの入力にエラーがあります')
@@ -91,13 +83,9 @@ async function run() {
   const ivs = getIVs()
   if (ivs.includes(null)) return alert('個体値の入力にエラーがあります')
 
-  const nature = Number(
-    (document.getElementById('nature-select') as HTMLSelectElement).value
-  )
+  const nature = Number(document.getElementById('nature-select').value)
 
-  const max = getValue(
-    document.getElementById('search-max') as HTMLInputElement
-  )
+  const max = getValue(document.getElementById('search-max'))
   if (max == null) return alert('上限の入力にエラーがあります')
 
   fetchSeedList(id, version)
@@ -114,8 +102,7 @@ async function run() {
     })
     .catch(() => {
       alert('seedリストの取得に失敗しました (・ω<)')
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      document.getElementById('start-button')!.removeAttribute('disabled')
+      document.getElementById('start-button').removeAttribute('disabled')
     })
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -124,8 +111,7 @@ function cancel() {
     worker.terminate()
     worker = null
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    document.getElementById('start-button')!.removeAttribute('disabled')
+    document.getElementById('start-button').removeAttribute('disabled')
     addRow('計算を中止しました')
   }
 }
