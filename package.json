@@ -6,8 +6,8 @@
   "scripts": {
     "gen": "ts-node ./scripts/generate.ts --project ./scripts/generate.ts",
     "build:base": "ncp ./src/index.html ./page/index.html & ncp ./src/css ./page/css & tsc",
-    "build:dev": "npm run build:base & ncp ./src/env/getUrl.dev.js ./page/js/getUrl.js ",
-    "build:prod": "ncp ./src/index.html ./page/index.html & ncp ./src/css ./page/css & tsc & ncp ./src/env/getUrl.prod.js ./page/js/getUrl.js ",
+    "build:dev": "npm run build:base & ncp ./src/env/getUrl_dev.js ./page/js/getUrl.js ",
+    "build:prod": "npm run build:base & ncp ./src/env/getUrl_prod.js ./page/js/getUrl.js ",
     "start": "ts-node ./mock-server/index.ts --project ./mock-server/tsconfig.json",
     "test": "jest"
   },
