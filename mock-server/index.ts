@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import { readFileSync, existsSync } from 'fs'
 
 const webapp = express()
@@ -17,6 +18,7 @@ try {
 }
 
 const api = express()
+api.use(cors())
 api.get('/:ver/:id', (req, res) => {
   const { id, ver } = req.params
   const path = `./local/data/${ver}/${id.padStart(6, '0')}.json`

@@ -1,1 +1,1 @@
-export const getUrl = (id, version) => `http://localhost:3000/${version}/${id}`
+export const getUrl = (id, version) => `http://localhost:8080/${version}/${id}`

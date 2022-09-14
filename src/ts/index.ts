@@ -60,17 +60,15 @@ const createWorker = (id: string) => {
   return worker
 }
 
-const fetchSeedList = async (id: string, version: 'sm' | 'usum') => {
+const fetchSeedList = async (
+  id: string,
+  version: 'sm' | 'usum'
+): Promise<number[]> => {
   const url = getUrl(id, version)
-  return fetch(url)
-    .then((res) => {
-      if (!res.ok) throw new Error(`${res.status} ${res.statusText}`)
-      return res.json()
-    })
-    .catch((e) => {
-      console.log(e)
-      return null
-    })
+  return fetch(url).then((res) => {
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`)
+    return res.json()
+  })
 }
 
 const run = async () => {
@@ -101,8 +99,9 @@ const run = async () => {
       })
       addRow('計算を開始しました')
     })
-    .catch(() => {
+    .catch((e) => {
       alert('seedリストの取得に失敗しました (・ω<)')
+      console.log(e)
       document.getElementById('start-button').removeAttribute('disabled')
     })
 }
