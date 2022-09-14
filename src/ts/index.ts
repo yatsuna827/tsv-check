@@ -1,3 +1,5 @@
+import { getUrl } from './getUrl.js'
+
 const getValue = (el: HTMLInputElement) =>
   el.checkValidity() ? Number(el.value) : null
 const getID = () =>
@@ -59,7 +61,7 @@ const createWorker = (id: string) => {
 }
 
 const fetchSeedList = async (id: string, version: 'sm' | 'usum') => {
-  const url = `https://jyk6mdg08i.execute-api.ap-northeast-1.amazonaws.com/rng/gen7/tsvsupport?version=${version}&g7tid=${id}`
+  const url = getUrl(id, version)
   return fetch(url)
     .then((res) => {
       if (!res.ok) throw new Error(`${res.status} ${res.statusText}`)
@@ -71,8 +73,7 @@ const fetchSeedList = async (id: string, version: 'sm' | 'usum') => {
     })
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function run() {
+const run = async () => {
   document.getElementById('start-button').setAttribute('disabled', 'true')
 
   const version = document.getElementById('ver-sm').checked ? 'sm' : 'usum'
@@ -105,8 +106,7 @@ async function run() {
       document.getElementById('start-button').removeAttribute('disabled')
     })
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function cancel() {
+const cancel = () => {
   if (worker) {
     worker.terminate()
     worker = null
@@ -115,3 +115,6 @@ function cancel() {
     addRow('計算を中止しました')
   }
 }
+
+document.getElementById('start-button').onclick = run
+document.getElementById('cancel-button').onclick = cancel

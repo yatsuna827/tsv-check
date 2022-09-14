@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "gen": "ts-node ./scripts/generate.ts",
-    "build": "ncp ./src/index.html ./page/index.html & ncp ./src/css ./page/css & tsc",
-    "start": "ts-node ./local/index.ts",
-    "start:watch": "nodemon --watch local/ --exec ts-node ./local/index.ts",
+    "build:base": "ncp ./src/index.html ./page/index.html & ncp ./src/css ./page/css & tsc",
+    "build:dev": "npm run build:base & ncp ./src/env/getUrl.dev.js ./page/js/getUrl.js ",
+    "build:prod": "npm run build:base & ncp ./src/env/getUrl.prod.js ./page/js/getUrl.js ",
+    "start": "ts-node ./local/index.ts --project ./local/tsconfig.json",
+    "start:watch": "nodemon --watch local/ --exec ts-node ./local/index.ts --project ./local/tsconfig.json",
     "test": "jest"
   },
   "author": "yatsuna_827",
