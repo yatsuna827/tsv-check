@@ -43,7 +43,7 @@ jobs:
             ${{ runner.os }}-node-
       - run: npm ci
       - run: npm run gen
-      - run: npm run build:prod
+      - run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
