@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "gen": "ts-node ./scripts/generate.ts",
+    "gen": "ts-node ./scripts/generate.ts --project ./scripts/generate.ts",
     "build:base": "ncp ./src/index.html ./page/index.html & ncp ./src/css ./page/css & tsc",
     "build:dev": "npm run build:base & ncp ./src/env/getUrl.dev.js ./page/js/getUrl.js ",
     "build:prod": "npm run build:base & ncp ./src/env/getUrl.prod.js ./page/js/getUrl.js ",
