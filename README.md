@@ -10,7 +10,7 @@ TSとVが分かれているのはスクリプト部分をTSで書いているか
 ## 環境構築
 - `npm install` でパッケージをインストール.
 - `npm run gen` で `src/index.html` から型生成.
-- `npm run build` で ビルド.
+- `npm run build:dev` で ビルド.
 - `npm run start` でサーバ起動.
   - http://localhost:3000 がアプリ本体、http://localhost:8080 が開発用APIサーバ.
 
