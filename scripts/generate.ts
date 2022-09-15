@@ -4,7 +4,6 @@ import { readFileSync, writeFileSync } from 'fs'
 const html = readFileSync('src/index.html')
 const dom = new JSDOM(html)
 const document = dom.window.document
-// prettier-ignore
 const capitalize = (str: string) => str[0].toUpperCase() + str.substring(1).toLowerCase()
 
 const store = new Map<string, string[]>()

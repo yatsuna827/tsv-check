@@ -1,13 +1,8 @@
 import { getUrl } from './getUrl.js'
 
-const getValue = (el: HTMLInputElement) =>
-  el.checkValidity() ? Number(el.value) : null
-const getID = () =>
-  getValue(document.getElementById('id-input'))?.toString().padStart(6, '0')
-const getIVs = () =>
-  (['h', 'a', 'b', 'c', 'd', 's'] as const).map((_) =>
-    getValue(document.getElementById(`ivs-${_}`))
-  )
+const getValue = (el: HTMLInputElement) => (el.checkValidity() ? Number(el.value) : null)
+const getID = () => getValue(document.getElementById('id-input'))?.toString().padStart(6, '0')
+const getIVs = () => (['h', 'a', 'b', 'c', 'd', 's'] as const).map((_) => getValue(document.getElementById(`ivs-${_}`)))
 const addRow = (txt: string, onClick?: () => void) => {
   const div = document.createElement('div')
   const classes = ['message', 'card']
@@ -60,10 +55,7 @@ const createWorker = (id: string) => {
   return worker
 }
 
-const fetchSeedList = async (
-  id: string,
-  version: 'sm' | 'usum'
-): Promise<number[]> => {
+const fetchSeedList = async (id: string, version: 'sm' | 'usum'): Promise<number[]> => {
   const url = getUrl(id, version)
   return fetch(url).then((res) => {
     if (!res.ok) throw new Error(`${res.status} ${res.statusText}`)

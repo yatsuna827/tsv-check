@@ -21,14 +21,7 @@ class SFMT {
     this.stateVector = [] // 624
 
     this.stateVector[0] = seed >>> 0
-    for (let i = 1; i < 624; i++)
-      this.stateVector[i] =
-        (Math.imul(
-          0x6c078965,
-          this.stateVector[i - 1] ^ (this.stateVector[i - 1] >>> 30)
-        ) +
-          i) &
-        0xffffffff
+    for (let i = 1; i < 624; i++) this.stateVector[i] = (Math.imul(0x6c078965, this.stateVector[i - 1] ^ (this.stateVector[i - 1] >>> 30)) + i) & 0xffffffff
 
     this.periodCertification()
 
@@ -83,36 +76,10 @@ class SFMT {
     let c = 616
     let d = 620
     do {
-      p[a + 3] =
-        p[a + 3] ^
-        (p[a + 3] << 8) ^
-        (p[a + 2] >>> 24) ^
-        (p[c + 3] >>> 8) ^
-        (((p[b + 3] >>> 11) & MSK4) >>> 0) ^
-        (p[d + 3] << 18)
-      p[a + 2] =
-        p[a + 2] ^
-        (p[a + 2] << 8) ^
-        (p[a + 1] >>> 24) ^
-        (p[c + 3] << 24) ^
-        (p[c + 2] >>> 8) ^
-        (((p[b + 2] >>> 11) & MSK3) >>> 0) ^
-        (p[d + 2] << 18)
-      p[a + 1] =
-        p[a + 1] ^
-        (p[a + 1] << 8) ^
-        (p[a + 0] >>> 24) ^
-        (p[c + 2] << 24) ^
-        (p[c + 1] >>> 8) ^
-        (((p[b + 1] >>> 11) & MSK2) >>> 0) ^
-        (p[d + 1] << 18)
-      p[a + 0] =
-        p[a + 0] ^
-        (p[a + 0] << 8) ^
-        (p[c + 1] << 24) ^
-        (p[c + 0] >>> 8) ^
-        (((p[b + 0] >>> 11) & MSK1) >>> 0) ^
-        (p[d + 0] << 18)
+      p[a + 3] = p[a + 3] ^ (p[a + 3] << 8) ^ (p[a + 2] >>> 24) ^ (p[c + 3] >>> 8) ^ (((p[b + 3] >>> 11) & MSK4) >>> 0) ^ (p[d + 3] << 18)
+      p[a + 2] = p[a + 2] ^ (p[a + 2] << 8) ^ (p[a + 1] >>> 24) ^ (p[c + 3] << 24) ^ (p[c + 2] >>> 8) ^ (((p[b + 2] >>> 11) & MSK3) >>> 0) ^ (p[d + 2] << 18)
+      p[a + 1] = p[a + 1] ^ (p[a + 1] << 8) ^ (p[a + 0] >>> 24) ^ (p[c + 2] << 24) ^ (p[c + 1] >>> 8) ^ (((p[b + 1] >>> 11) & MSK2) >>> 0) ^ (p[d + 1] << 18)
+      p[a + 0] = p[a + 0] ^ (p[a + 0] << 8) ^ (p[c + 1] << 24) ^ (p[c + 0] >>> 8) ^ (((p[b + 0] >>> 11) & MSK1) >>> 0) ^ (p[d + 0] << 18)
       c = d
       d = a
       a += 4
@@ -122,9 +89,7 @@ class SFMT {
   }
 
   toString() {
-    return this.stateVector
-      .map((_) => (_ >>> 0).toString(16).padStart(8, '0'))
-      .join(',')
+    return this.stateVector.map((_) => (_ >>> 0).toString(16).padStart(8, '0')).join(',')
   }
 }
 class SFMTStream {
