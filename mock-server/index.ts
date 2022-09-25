@@ -21,7 +21,7 @@ const api = express()
 api.use(cors())
 api.get('/:ver/:id', (req, res) => {
   const { id, ver } = req.params
-  const path = `./local/data/${ver}/${id.padStart(6, '0')}.json`
+  const path = `./mock-server/data/${ver}/${id.padStart(6, '0')}.json`
   let data: string | undefined = undefined
 
   if (
